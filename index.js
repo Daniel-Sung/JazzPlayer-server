@@ -44,6 +44,21 @@ if (!fs.existsSync(TEMP_DIR)) {
 // Serve static audio files
 app.use('/audio', express.static(TEMP_DIR));
 
+// Root route - API info
+app.get('/', (req, res) => {
+  res.json({
+    name: 'JazzPlayer API Server',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: 'GET /api/health',
+      extract: 'POST /api/youtube/extract',
+      lyrics: 'GET /api/lyrics/search?title=...',
+      ytdlp: 'GET /api/check-ytdlp'
+    }
+  });
+});
+
 // Clean up old files (older than 1 hour)
 function cleanupOldFiles() {
   const oneHourAgo = Date.now() - 60 * 60 * 1000;
