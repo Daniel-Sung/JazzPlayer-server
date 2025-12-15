@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: jazzplayer-server
+    env: node
+    plan: free
+    buildCommand: npm install && apt-get update && apt-get install -y ffmpeg python3 python3-pip && pip3 install yt-dlp
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
